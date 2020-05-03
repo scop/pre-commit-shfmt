@@ -1,0 +1,6 @@
+- id: shfmt
+  name: shfmt
+  language: golang
+  entry: shfmt
+  args: [-w]
+  types: [shell]
