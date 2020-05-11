@@ -1,6 +1,13 @@
 # pre-commit-shfmt-workaround
 
-Temporary workaround for using shfmt with pre-commit <= 2.3.0. Usage:
+Obsolete temporary workaround for using shfmt with pre-commit <= 2.3.0.
+
+Upgrade to pre-commit >= 2.4.0 _now_, and use a config like the below,
+except change to `repo: local` and remove `rev`. Or take backups or
+fork this repo, if you want to keep using this, this one will go away
+really soon now.
+
+Usage:
 
 ```yaml
 - repo: https://github.com/scop/pre-commit-shfmt-workaround
@@ -14,7 +21,3 @@ Temporary workaround for using shfmt with pre-commit <= 2.3.0. Usage:
       args: [-w]
       types: [shell]
 ```
-
-This will likely go away as soon as pre-commit > 2.3.0 is out; with
-that it should be possible to use `local` instead of this as `repo`,
-and `rev` removed.
