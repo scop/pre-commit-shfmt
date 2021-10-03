@@ -1,23 +1,15 @@
-# pre-commit-shfmt-workaround
+# pre-commit-shfmt
 
-Obsolete temporary workaround for using shfmt with pre-commit <= 2.3.0.
+[shfmt](https://github.com/mvdan/sh#shfmt) hook for
+[pre-commit](https://pre-commit.com).
 
-Upgrade to pre-commit >= 2.4.0 _now_, and use a config like the below,
-except change to `repo: local` and remove `rev`. Or take backups or
-fork this repo, if you want to keep using this, this one will go away
-really soon now.
-
-Usage:
+Usage in `.pre-commit-config.yaml`:
 
 ```yaml
-- repo: https://github.com/scop/pre-commit-shfmt-workaround
-  rev: v0
+- repo: https://github.com/scop/pre-commit-shfmt
+  rev: v3.3.1
   hooks:
-    - id: shfmt
-      name: shfmt
-      language: golang
-      additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.1.1]
-      entry: shfmt
-      args: [-w]
-      types: [shell]
+    # Choose one of:
+    - shfmt         # native (requires Go to build)
+    - shfmt-docker  # Docker image (requires Docker to run)
 ```
