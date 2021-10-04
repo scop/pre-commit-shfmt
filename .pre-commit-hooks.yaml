@@ -6,7 +6,7 @@
   entry: shfmt
   args: [-w, -s]
   types: [shell]
-  stages: [commit, manual]
+  stages: [commit, merge-commit, push, manual]
 
 - id: shfmt-docker
   name: shfmt
@@ -15,4 +15,4 @@
   entry: --net none mvdan/shfmt:v3.4.0
   args: [-w, -s]
   types: [shell]
-  stages: [commit, manual]
+  stages: [commit, merge-commit, push, manual]
