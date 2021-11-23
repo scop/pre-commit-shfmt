@@ -10,6 +10,6 @@ Usage in `.pre-commit-config.yaml`:
   rev: v3.4.0-1
   hooks:
     # Choose one of:
-    - shfmt         # native (requires Go to build)
-    - shfmt-docker  # Docker image (requires Docker to run)
+    - id: shfmt         # native (requires Go to build)
+    - id: shfmt-docker  # Docker image (requires Docker to run)
 ```
