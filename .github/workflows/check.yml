@@ -1,0 +1,23 @@
+name: Main push and PR checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+      - uses: actions/setup-python@v2
+      # No caching as we're expected to run rarely
+      - name: Install dependencies and run checks
+        run: |
+          venv=$(mktemp -d ${TMPDIR:-/tmp}/venv.XXXXXX)
+          python3 -m venv "$venv"
+          source "$venv/bin/activate"
+          python3 -m pip install pre-commit
+          pre-commit try-repo . --all-files
