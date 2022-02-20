@@ -1,0 +1,18 @@
+name: Tag checks
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run checks
+        run: |
+          grep -P --color=always "\s+(?<=rev: )$GITHUB_REF_NAME$" README.md
+          ver=${GITHUB_REF_NAME%-*}
+          grep -P --color=always "(?<=/shfmt@)$ver(?=])" .pre-commit-hooks.yaml
+          grep -P --color=always "(?<=/shfmt:)$ver(?=@)" .pre-commit-hooks.yaml
