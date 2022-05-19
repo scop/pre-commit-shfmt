@@ -1,3 +1,3 @@
 module github.com/scop/pre-commit-shfmt/v3
 
-go 1.16
+go 1.17
