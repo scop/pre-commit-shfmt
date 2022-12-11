@@ -7,7 +7,7 @@ Usage in `.pre-commit-config.yaml`:
 
 ```yaml
 - repo: https://github.com/scop/pre-commit-shfmt
-  rev: v3.5.1-1
+  rev: v3.5.1-2
   hooks:
     # Choose one of:
     - id: shfmt         # native (requires Go to build)
