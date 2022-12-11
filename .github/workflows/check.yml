@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version-file: go.mod
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
       # No caching as we're expected to run rarely
       - name: Install dependencies and run checks
         run: |
