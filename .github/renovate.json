@@ -7,6 +7,9 @@
   ],
   "semanticCommits": "enabled",
   "commitMessageTopic": "{{depName}}",
+  "golang": {
+    "enabled": false
+  },
   "regexManagers": [
     {
       "fileMatch": ["^\\.pre-commit-hooks\\.yaml$", "^README\\.md$"],
