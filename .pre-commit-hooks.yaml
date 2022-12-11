@@ -2,6 +2,7 @@
   name: shfmt
   description: Shell source code formatter (native install)
   language: golang
+  # Note: keep Go version in `go.mod` in sync with shfmt's required Go version
   additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.5.1]
   entry: shfmt
   args: [-w, -s]
