@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", ":preserveSemverRanges", ":semanticPrefixChore"],
+  "ignorePresets": [
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers"
+  ],
+  "semanticCommits": "enabled",
+  "commitMessageTopic": "{{depName}}",
+  "regexManagers": [
+    {
+      "fileMatch": ["^\\.pre-commit-hooks\\.yaml$", "^README\\.md$"],
+      "matchStrings": ["\\b(/shfmt[@:]|rev: )v(?<currentValue>\\d+(\\.\\d+)+)"],
+      "depNameTemplate": "mvdan/sh",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
+  ]
+}
