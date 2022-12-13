@@ -13,7 +13,7 @@
   "regexManagers": [
     {
       "fileMatch": ["^\\.pre-commit-hooks\\.yaml$", "^README\\.md$"],
-      "matchStrings": ["(/shfmt[@:]|\\brev: )v(?<currentValue>\\d+(\\.\\d+)+)"],
+      "matchStrings": ["(/shfmt[@:]|\\brev: )(?<currentValue>v\\d+(\\.\\d+)+)"],
       "depNameTemplate": "mvdan/sh",
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
