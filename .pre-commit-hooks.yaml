@@ -7,6 +7,7 @@
   entry: shfmt
   args: [-w, -s]
   types: [shell]
+  exclude_types: [zsh]
   stages: [commit, merge-commit, push, manual]
 
 - id: shfmt-docker
@@ -17,4 +18,5 @@
   entry: --net none mvdan/shfmt:v3.6.0@sha256:b68b0e33bf799f393aec27f72da64ec1d84476c8cfa9a2a7bfd0cbbdbfc8d534
   args: [-w, -s]
   types: [shell]
+  exclude_types: [zsh]
   stages: [commit, merge-commit, push, manual]
