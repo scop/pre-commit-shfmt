@@ -11,13 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-go@v4
-        with:
-          go-version-file: go.mod
-          cache: false
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ">=3.7"
       # No caching as we're expected to run rarely
       - name: Install dependencies and run checks
         run: |
