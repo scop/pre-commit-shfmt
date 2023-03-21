@@ -21,8 +21,5 @@ jobs:
       # No caching as we're expected to run rarely
       - name: Install dependencies and run checks
         run: |
-          venv=$(mktemp -d ${TMPDIR:-/tmp}/venv.XXXXXX)
-          python3 -m venv "$venv"
-          source "$venv/bin/activate"
           python3 -m pip install pre-commit
           pre-commit try-repo . --color always --all-files
