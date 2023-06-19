@@ -3,7 +3,7 @@ name: Tag checks
 on:
   push:
     tags:
-      - "*"
+      - v*
 
 jobs:
   check:
