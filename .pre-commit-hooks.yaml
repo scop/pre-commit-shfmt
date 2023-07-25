@@ -10,6 +10,18 @@
   exclude_types: [csh, tcsh, zsh]
   stages: [commit, merge-commit, push, manual]
 
+- id: shfmt-gstyle
+  name: shfmt google-ish style
+  description: Shell source code formatter (native install)
+  language: golang
+  # Note: keep Go version in `go.mod` in sync with shfmt's required Go version
+  additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.7.0]
+  entry: shfmt
+  args: [-w, -s, -ci, -bn, -i, "2"]
+  types: [shell]
+  exclude_types: [csh, tcsh, zsh]
+  stages: [commit, merge-commit, push, manual]
+
 - id: shfmt-docker
   name: shfmt
   description: Shell source code formatter (Docker image)
