@@ -1,0 +1,6 @@
+[project]
+name = "pre-commit-shfmt"
+version = "3.7.0-2"
+dependencies = [
+  "wrun-py",
+]
