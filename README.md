@@ -7,9 +7,15 @@ Usage in `.pre-commit-config.yaml`:
 
 ```yaml
 - repo: https://github.com/scop/pre-commit-shfmt
-  rev: v3.7.0-1
+  rev: v3.7.0-2
   hooks:
     # Choose one of:
-    - id: shfmt         # native (requires/installs Go to build)
+    - id: shfmt         # prebuilt upstream executable
+    - id: shfmt-src     # build from source (requires/installs Go to build)
     - id: shfmt-docker  # Docker image (requires Docker to run)
 ```
+
+> #### Note
+> From v3.7.0-2 on, the `shfmt` id points to the variant that uses a prebuilt
+> upstream executable. The one that builds from source is available as
+> `shfmt-src`.
