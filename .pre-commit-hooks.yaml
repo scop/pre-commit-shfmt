@@ -21,7 +21,7 @@
     --url
     windows/amd64=https://github.com/mvdan/sh/releases/download/v3.7.0/shfmt_v3.7.0_windows_amd64.exe#2807b4af91fbbd961b68716de06c044f1b4f897457fc89fba216e5e2e351c64f
     --
-  args: [-w, -s]
+  args: [-w, -s, -ci, -bn, -i, "2"]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
   stages: [commit, merge-commit, push, manual]
@@ -33,7 +33,7 @@
   # Note: keep Go version in `go.mod` in sync with shfmt's required Go version
   additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.7.0]
   entry: shfmt
-  args: [-w, -s]
+  args: [-w, -s, -ci, -bn, -i, "2"]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
   stages: [commit, merge-commit, push, manual]
@@ -44,7 +44,7 @@
   language: docker_image
   # Note: use the top level multiplatform image digest here
   entry: --net none mvdan/shfmt:v3.7.0@sha256:c029770b8d8091b482cd1b30bd190d1d422bb5787e6ddc7894ef7d9784578690
-  args: [-w, -s]
+  args: [-w, -s, -ci, -bn, -i, "2"]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
   stages: [commit, merge-commit, push, manual]

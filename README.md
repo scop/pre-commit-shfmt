@@ -1,5 +1,7 @@
 # pre-commit-shfmt
 
+This fork by default enforces a configuration that roughly follows [Google style](https://google.github.io/styleguide/shellguide.html), following steps described [here](https://github.com/mvdan/sh/blob/master/cmd/shfmt/shfmt.1.scd#examples).
+
 [shfmt](https://github.com/mvdan/sh#shfmt) hook for
 [pre-commit](https://pre-commit.com), with auto install.
 
