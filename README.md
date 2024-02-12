@@ -16,6 +16,7 @@ Usage in `.pre-commit-config.yaml`:
 ```
 
 > #### Note
+>
 > From v3.7.0-2 on, the `shfmt` id points to the variant that uses a prebuilt
 > upstream executable. The one that builds from source is available as
 > `shfmt-src`.
