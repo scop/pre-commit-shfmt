@@ -16,9 +16,6 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-# At least Python 3.11 is required.
-
-import hashlib
 import re
 import string
 import sys
@@ -121,16 +118,23 @@ def main(python_pkg_tag: str) -> None:
     data = {
         "python_pkg_version": python_pkg_tag.lstrip("v"),
     }
+    url = urljoin(base_url, "sha256sums.txt")
+    hexdigests = {}
+    with urlopen(url) as f:
+        for line in f:
+            if m := re.search(r"^([0-9a-f]{64})\s+(\S+)$", line.decode()):
+                hexdigests[m.group(2)] = m.group(1)
     for fn in release_files:
         if m := re.search(r"_([a-z0-9]+_[a-z0-9]+)(?:\.exe)?$", fn):
             os_arch = m.group(1)
         else:
             raise ValueError(f"could not determine OS/arch from {fn}")
-        url = urljoin(base_url, urlquote(fn.format(main_tag=main_tag)))
-        with urlopen(url) as f:
-            hexdigest = hashlib.file_digest(f, "sha256").hexdigest()
-        data[f"url_{os_arch}"] = url
-        data[f"hexdigest_{os_arch}"] = hexdigest
+        fn = fn.format(main_tag=main_tag)
+        data[f"url_{os_arch}"] = urljoin(base_url, urlquote(fn))
+        if hexdigest := hexdigests.get(fn):
+            data[f"hexdigest_{os_arch}"] = hexdigest
+        else:
+            raise KeyError(f"no hexdigest found for {fn}")
 
     st = string.Template(setup_cfg_template.lstrip())
     setup_cfg = st.substitute(data)
