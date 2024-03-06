@@ -21,26 +21,25 @@ import string
 import sys
 from urllib.parse import quote as urlquote, urljoin
 from urllib.request import urlopen
+from urllib.error import URLError, HTTPError
 
 setup_cfg_template = """
 [metadata]
-name = shfmt_py
+name = hadolint_py
 version = ${python_pkg_version}
-description = Shell source code formatter
+description = Dockerfile linter
 url = https://github.com/scop/pre-commit-shfmt
-# license here is for shfmt proper; Python packaging related files may have others, see their contents and classifiers below
-license = BSD 3-Clause
+# license here is for hadolint proper; Python packaging related files may have others, see their contents and classifiers below
+license = GPL-3.0-only
 classifiers =
     Intended Audience :: Developers
-    License :: OSI Approved :: Apache Software License
-    License :: OSI Approved :: BSD License
-    License :: OSI Approved :: MIT License
+    License :: OSI Approved :: GNU General Public License v3 (GPLv3)
     Operating System :: MacOS
     Operating System :: Microsoft :: Windows
     Operating System :: POSIX :: Linux
-    Programming Language :: Go
+    Programming Language :: Haskell
 project_urls =
-    Upstream = https://github.com/mvdan/sh#shfmt
+    Upstream = https://github.com/hadolint/hadolint
 
 [options]
 packages =
@@ -50,49 +49,23 @@ setup_requires =
 
 [setuptools_download]
 download_scripts =
-    [shfmt]
-    group = shfmt-binary
+    [hadolint]
+    group = hadolint-binary
     marker = sys_platform == "darwin" and platform_machine == "x86_64"
     url = ${url_darwin_amd64}
     sha256 = ${hexdigest_darwin_amd64}
-    [shfmt]
-    group = shfmt-binary
-    marker = sys_platform == "darwin" and platform_machine == "arm64"
-    url = ${url_darwin_arm64}
-    sha256 = ${hexdigest_darwin_arm64}
-    [shfmt]
-    group = shfmt-binary
-    # TODO: verify i386
-    marker = sys_platform == "linux" and platform_machine == "i386"
-    marker = sys_platform == "linux" and platform_machine == "i686"
-    url = ${url_linux_386}
-    sha256 = ${hexdigest_linux_386}
-    [shfmt]
-    group = shfmt-binary
-    marker = sys_platform == "linux" and platform_machine == "x86_64"
-    url = ${url_linux_amd64}
-    sha256 = ${hexdigest_linux_amd64}
-    [shfmt]
-    group = shfmt-binary
-    # TODO: verify armv6hf
-    marker = sys_platform == "linux" and platform_machine == "armv6hf"
-    marker = sys_platform == "linux" and platform_machine == "armv7l"
-    url = ${url_linux_arm}
-    sha256 = ${hexdigest_linux_arm}
-    [shfmt]
-    group = shfmt-binary
+    [hadolint]
+    group = hadolint-binary
     marker = sys_platform == "linux" and platform_machine == "aarch64"
     url = ${url_linux_arm64}
     sha256 = ${hexdigest_linux_arm64}
-    [shfmt.exe]
-    group = shfmt-binary
-    # TODO: verify both
-    marker = sys_platform == "win32" and platform_machine == "x86"
-    marker = sys_platform == "cygwin" and platform_machine == "i386"
-    url = ${url_windows_386}
-    sha256 = ${hexdigest_windows_386}
-    [shfmt.exe]
-    group = shfmt-binary
+    [hadolint]
+    group = hadolint-binary
+    marker = sys_platform == "linux" and platform_machine == "x86_64"
+    url = ${url_linux_amd64}
+    sha256 = ${hexdigest_linux_amd64}
+    [hadolint.exe]
+    group = hadolint-binary
     marker = sys_platform == "win32" and platform_machine == "AMD64"
     marker = sys_platform == "cygwin" and platform_machine == "x86_64"
     url = ${url_windows_amd64}
@@ -100,44 +73,56 @@ download_scripts =
 """
 
 release_files = [
-    "shfmt_{main_tag}_darwin_amd64",
-    "shfmt_{main_tag}_darwin_arm64",
-    "shfmt_{main_tag}_linux_386",
-    "shfmt_{main_tag}_linux_amd64",
-    "shfmt_{main_tag}_linux_arm",
-    "shfmt_{main_tag}_linux_arm64",
-    "shfmt_{main_tag}_windows_386.exe",
-    "shfmt_{main_tag}_windows_amd64.exe",
+    "hadolint-Darwin-x86_64",
+    "hadolint-Linux-arm64",
+    "hadolint-Linux-x86_64",
+    "hadolint-Windows-x86_64.exe",
 ]
+
+def fetch_checksum(binary_name, base_url):
+    sha256_url = f"{base_url}{binary_name}.sha256"
+    try:
+        with urlopen(sha256_url) as response:
+            content = response.read().decode('utf-8')
+        checksum = content.split()[0]
+        if not re.match(r'^[A-Fa-f0-9]{64}$', checksum):
+            print(f"Invalid checksum for {binary_name}")
+            return None
+        return checksum
+    except HTTPError as e:
+        print(f"HTTP Error: {e.code} - {e.reason}")
+    except URLError as e:
+        print(f"URL Error: {e.reason}")
 
 
 def main(python_pkg_tag: str) -> None:
-    main_tag, _, _ = python_pkg_tag.partition("-")
-    base_url = f"https://github.com/mvdan/sh/releases/download/{urlquote(main_tag)}/"
+    main_tag = python_pkg_tag  # Keep the "v" prefix as part of the version
+    base_url = f"https://github.com/hadolint/hadolint/releases/download/{urlquote(main_tag)}/"
 
-    data = {
-        "python_pkg_version": python_pkg_tag.lstrip("v"),
-    }
-    url = urljoin(base_url, "sha256sums.txt")
-    hexdigests = {}
-    with urlopen(url) as f:
-        for line in f:
-            if m := re.search(r"^([0-9a-f]{64})\s+(\S+)$", line.decode()):
-                hexdigests[m.group(2)] = m.group(1)
-    for fn in release_files:
-        if m := re.search(r"_([a-z0-9]+_[a-z0-9]+)(?:\.exe)?$", fn):
-            os_arch = m.group(1)
-        else:
-            raise ValueError(f"could not determine OS/arch from {fn}")
-        fn = fn.format(main_tag=main_tag)
-        data[f"url_{os_arch}"] = urljoin(base_url, urlquote(fn))
-        if hexdigest := hexdigests.get(fn):
-            data[f"hexdigest_{os_arch}"] = hexdigest
-        else:
-            raise KeyError(f"no hexdigest found for {fn}")
+    data = {"python_pkg_version": main_tag}
 
-    st = string.Template(setup_cfg_template.lstrip())
-    setup_cfg = st.substitute(data)
+    for binary in release_files:
+        parts = binary.split('-')  # Splitting the binary name into parts, excluding 'hadolint'
+        os_part, arch_part = parts[1], parts[2]
+        if arch_part == "x86_64": arch_part = "amd64"  # Adjusting the architecture naming except for Windows
+        if 'Windows' not in binary:
+            os_arch = f"{os_part.lower()}_{arch_part}"  # Forming os_arch without the 'hadolint' prefix and adjusted architecture naming
+        else:
+            os_arch = "windows_amd64"
+        binary_name = f"{binary}"
+        checksum = fetch_checksum(binary_name, base_url)
+        
+        if checksum is None:
+            print(f"Could not fetch checksum for {binary_name}. Skipping.")
+            continue  # Skip this binary and continue with the next one
+        
+        data[f"url_{os_arch}"] = f"{base_url}{binary_name}"
+        data[f"hexdigest_{os_arch}"] = checksum
+    try:
+        setup_cfg = string.Template(setup_cfg_template.lstrip()).substitute(data)
+    except KeyError as e:
+        print(f"Missing key in data dictionary: {e}")
+        return
     sys.stdout.write(setup_cfg)
 
 
