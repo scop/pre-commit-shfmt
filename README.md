@@ -1,22 +1,13 @@
-# pre-commit-shfmt
+# pre-commit-hadolint
 
-[shfmt](https://github.com/mvdan/sh#shfmt) hook for
+[hadolint](https://github.com/hadolint/hadolint/) hook for
 [pre-commit](https://pre-commit.com), with auto install.
 
 Usage in `.pre-commit-config.yaml`:
 
 ```yaml
-- repo: https://github.com/scop/pre-commit-shfmt
-  rev: v3.8.0-1
+- repo: https://github.com/hadolint/hadolint/
+  rev: v2.12.0
   hooks:
-    # Choose one of:
-    - id: shfmt         # prebuilt upstream executable
-    - id: shfmt-src     # build from source (requires/installs Go to build)
-    - id: shfmt-docker  # Docker image (requires Docker to run)
+    - id: hadolint        # prebuilt upstream executable
 ```
-
-> #### Note
->
-> From v3.7.0-2 on, the `shfmt` id points to the variant that uses a prebuilt
-> upstream executable. The one that builds from source is available as
-> `shfmt-src`.
