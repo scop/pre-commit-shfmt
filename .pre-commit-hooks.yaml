@@ -1,32 +1,7 @@
-- id: shfmt
-  name: shfmt
-  description: Shell source code formatter (prebuilt upstream executable)
+- id: hadolint
+  name: hadolint
+  description: Dockerfile linter
   language: python
-  entry: shfmt
-  args: [-w, -s]
-  types: [shell]
-  exclude_types: [csh, tcsh, zsh]
-  stages: [commit, merge-commit, push, manual]
-
-- id: shfmt-src
-  name: shfmt
-  description: Shell source code formatter (build from source)
-  language: golang
-  # Note: keep Go version in `go.mod` in sync with shfmt's required Go version
-  additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.8.0]
-  entry: shfmt
-  args: [-w, -s]
-  types: [shell]
-  exclude_types: [csh, tcsh, zsh]
-  stages: [commit, merge-commit, push, manual]
-
-- id: shfmt-docker
-  name: shfmt
-  description: Shell source code formatter (Docker image)
-  language: docker_image
-  # Note: use the top level multiplatform image digest here
-  entry: --net none mvdan/shfmt:v3.8.0@sha256:7443e0094a8af5f764f0e8619a64c3b6169d716da68c175fb08ba28a99235c8a
-  args: [-w, -s]
-  types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  entry: hadolint
+  types: [dockerfile]
   stages: [commit, merge-commit, push, manual]
