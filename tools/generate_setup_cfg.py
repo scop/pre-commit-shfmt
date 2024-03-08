@@ -19,7 +19,7 @@
 import re
 import string
 import sys
-from urllib.parse import quote as urlquote, urljoin
+from urllib.parse import quote as urlquote
 from urllib.request import urlopen
 from urllib.error import URLError, HTTPError
 

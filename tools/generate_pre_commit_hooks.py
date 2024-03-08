@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import string
 import sys
 
 hooks_template = """
@@ -12,7 +11,6 @@ hooks_template = """
   types: [dockerfile]
   stages: [commit, merge-commit, push, manual]
 """
-
 
 def main() -> None:
     # If you later decide to use a dynamic value, like Hadolint version, you can reintroduce and use a data dictionary here.
