@@ -51,11 +51,6 @@ setup_requires =
 download_scripts =
     [hadolint]
     group = hadolint-binary
-    marker = sys_platform == "darwin" and platform_machine == "x86_64"
-    url = ${url_darwin_amd64}
-    sha256 = ${hexdigest_darwin_amd64}
-    [hadolint]
-    group = hadolint-binary
     marker = sys_platform == "linux" and platform_machine == "aarch64"
     url = ${url_linux_arm64}
     sha256 = ${hexdigest_linux_arm64}
@@ -73,7 +68,8 @@ download_scripts =
 """
 
 release_files = [
-    "hadolint-Darwin-x86_64",
+    # replace once the segfault issue is fixed for hadolint on github
+    # "hadolint-Darwin-x86_64", 
     "hadolint-Linux-arm64",
     "hadolint-Linux-x86_64",
     "hadolint-Windows-x86_64.exe",
@@ -94,12 +90,20 @@ def fetch_checksum(binary_name, base_url):
     except URLError as e:
         print(f"URL Error: {e.reason}")
 
+HADOLINT_MACOS_SHA256 = "1ce867b213ba400ed1b7e04cdb1f1046513d16b901a1533cf1c58ba981a3061d"
+# Adjustments made for macOS binary fetching from Homebrew
+HADOLINT_MACOS_BOTTLE_URL = f"https://ghcr.io/v2/homebrew/core/hadolint/blobs/sha256:{HADOLINT_MACOS_SHA256}"
+
 
 def main(python_pkg_tag: str) -> None:
     main_tag = python_pkg_tag  # Keep the "v" prefix as part of the version
     base_url = f"https://github.com/hadolint/hadolint/releases/download/{urlquote(main_tag)}/"
 
-    data = {"python_pkg_version": main_tag}
+    data = {
+        "python_pkg_version": main_tag,
+        "url_darwin_amd64": HADOLINT_MACOS_BOTTLE_URL,
+        "hexdigest_darwin_amd64": HADOLINT_MACOS_SHA256,
+    }
 
     for binary in release_files:
         parts = binary.split('-')  # Splitting the binary name into parts, excluding 'hadolint'
