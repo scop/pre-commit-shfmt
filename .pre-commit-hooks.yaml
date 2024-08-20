@@ -25,7 +25,7 @@
   description: Shell source code formatter (Docker image)
   language: docker_image
   # Note: use the top level multiplatform image digest here
-  entry: --net none mvdan/shfmt:v3.9.0@sha256:7443e0094a8af5f764f0e8619a64c3b6169d716da68c175fb08ba28a99235c8a
+  entry: --net none mvdan/shfmt:v3.9.0@sha256:cb4ca87cc18e52f184a7ba1ae1ef7350b79a2c216ace78a0d24b473e87f0b8f5
   args: [-w, -s]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
