@@ -8,17 +8,26 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
       # No caching as we're expected to run rarely
       - name: Install dependencies and run checks
+        shell: bash
         run: |
           set -euxo pipefail
+          python3 -m venv venv
+          source venv/bin/activate
           python3 -m pip install pre-commit
           export PRE_COMMIT_COLOR=always
-          pre-commit try-repo . --files .github/workflows/test-good.sh
-          for hook in shfmt shfmt-docker; do
+          shfmt_docker=$(type docker &>/dev/null && echo shfmt-docker || :)
+          for hook in shfmt shfmt-src $shfmt_docker; do
+            pre-commit try-repo . $hook --files .github/workflows/test-good.sh
+          done
+          for hook in shfmt $shfmt_docker; do
             ! pre-commit try-repo . $hook --files .github/workflows/test-bad.sh
             ! git diff --exit-code .github/workflows/test-bad.sh
             git restore .github/workflows/test-bad.sh
