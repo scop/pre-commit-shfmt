@@ -16,7 +16,8 @@ hooks_template = """
   args: [-w, -s]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
-  stages: [commit, merge-commit, push, manual]
+  stages: [pre-commit, pre-merge-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0 # for "stages" names
 
 - id: shfmt-src
   name: shfmt
@@ -28,7 +29,8 @@ hooks_template = """
   args: [-w, -s]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
-  stages: [commit, merge-commit, push, manual]
+  stages: [pre-commit, pre-merge-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0 # for "stages" names
 
 - id: shfmt-docker
   name: shfmt
@@ -39,7 +41,8 @@ hooks_template = """
   args: [-w, -s]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
-  stages: [commit, merge-commit, push, manual]
+  stages: [pre-commit, pre-merge-commit, pre-push, manual]
+  minimum_pre_commit_version: 3.2.0 # for "stages" names
 """
 
 
