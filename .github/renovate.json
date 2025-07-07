@@ -15,8 +15,8 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^\\.pre-commit-hooks\\.yaml$/",
-        "/^README\\.md$/"
+        ".pre-commit-hooks.yaml",
+        "README.md"
       ],
       "matchStrings": [
         "(/shfmt[@:]|\\brev: )(?<currentValue>v\\d+(\\.\\d+)+)"
