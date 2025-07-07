@@ -1,22 +1,37 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", ":preserveSemverRanges", ":semanticPrefixChore"],
+  "extends": [
+    "config:best-practices",
+    ":preserveSemverRanges",
+    ":semanticPrefixChore"
+  ],
   "ignorePresets": [
     ":dependencyDashboard",
     ":semanticPrefixFixDepsChoreOthers"
   ],
   "semanticCommits": "enabled",
   "commitMessageTopic": "{{depName}}",
-  "golang": {
-    "enabled": false
-  },
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["^\\.pre-commit-hooks\\.yaml$", "^README\\.md$"],
-      "matchStrings": ["(/shfmt[@:]|\\brev: )(?<currentValue>v\\d+(\\.\\d+)+)"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.pre-commit-hooks\\.yaml$/",
+        "/^README\\.md$/"
+      ],
+      "matchStrings": [
+        "(/shfmt[@:]|\\brev: )(?<currentValue>v\\d+(\\.\\d+)+)"
+      ],
       "depNameTemplate": "mvdan/sh",
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchCategories": [
+        "golang"
+      ],
+      "enabled": false
     }
   ]
 }
