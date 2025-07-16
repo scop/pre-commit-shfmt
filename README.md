@@ -19,7 +19,10 @@ Usage in `.pre-commit-config.yaml`:
     - id: shfmt-docker  # Docker image (requires Docker to run)
 ```
 
-> #### Note
+> #### Notes
+>
+> From v3.12.0-2 on, the default args passed to `shfmt`
+> [no longer contain `-s`](https://github.com/mvdan/sh/issues/1173).
 >
 > From v3.7.0-2 on, the `shfmt` id points to the variant that uses a prebuilt
 > upstream executable. The one that builds from source is available as
