@@ -5,6 +5,9 @@ on:
     tags:
       - v*
 
+permissions:
+  contents: read
+
 jobs:
   check:
     runs-on: ubuntu-latest
