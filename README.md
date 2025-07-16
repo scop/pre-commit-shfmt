@@ -3,6 +3,7 @@
 [![Main push and PR checks](https://github.com/scop/pre-commit-shfmt/actions/workflows/check.yml/badge.svg)](https://github.com/scop/pre-commit-shfmt/actions/workflows/check.yml)
 [![Tag checks](https://github.com/scop/pre-commit-shfmt/actions/workflows/check-tag.yml/badge.svg)](https://github.com/scop/pre-commit-shfmt/actions/workflows/check-tag.yml)
 [![CodeQL](https://github.com/scop/pre-commit-shfmt/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/scop/pre-commit-shfmt/actions/workflows/github-code-scanning/codeql)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/scop/pre-commit-shfmt/badge)](https://scorecard.dev/viewer/?uri=github.com%2Fscop%2Fpre-commit-shfmt)
 
 [shfmt](https://github.com/mvdan/sh#shfmt) hook for
 [pre-commit](https://pre-commit.com), with auto install.
