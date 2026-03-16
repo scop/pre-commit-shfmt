@@ -15,8 +15,7 @@
       ],
       "depNameTemplate": "mvdan/sh",
       "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver",
-      "minimumReleaseAge": null
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
@@ -25,6 +24,12 @@
         "golang"
       ],
       "enabled": false
+    },
+    {
+      "matchDepNames": [
+        "mvdan/sh"
+      ],
+      "minimumReleaseAge": null
     }
   ]
 }
