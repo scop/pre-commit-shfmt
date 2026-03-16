@@ -15,7 +15,8 @@
       ],
       "depNameTemplate": "mvdan/sh",
       "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
+      "versioningTemplate": "semver",
+      "minimumReleaseAge": null
     }
   ],
   "packageRules": [
