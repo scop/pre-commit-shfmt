@@ -13,7 +13,7 @@ hooks_template = """
   description: Shell source code formatter (prebuilt upstream executable)
   language: python
   entry: shfmt
-  args: [-w, -s]
+  args: [--write]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
@@ -26,7 +26,7 @@ hooks_template = """
   # Note: keep Go version in `go.mod` in sync with shfmt's required Go version
   additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@${shfmt_tag}]
   entry: shfmt
-  args: [-w, -s]
+  args: [--write]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
@@ -38,7 +38,7 @@ hooks_template = """
   language: docker_image
   # Note: use the top level multiplatform image digest here
   entry: --net none mvdan/shfmt:${shfmt_tag}@${docker_image_digest}
-  args: [-w, -s]
+  args: [--write]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
