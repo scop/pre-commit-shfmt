@@ -24,6 +24,12 @@
         "golang"
       ],
       "enabled": false
+    },
+    {
+      "matchDepNames": [
+        "mvdan/sh"
+      ],
+      "minimumReleaseAge": null
     }
   ]
 }
