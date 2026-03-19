@@ -14,7 +14,7 @@
   description: Shell source code formatter (build from source)
   language: golang
   # Note: keep Go version in `go.mod` in sync with shfmt's required Go version
-  additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.12.0]
+  additional_dependencies: [mvdan.cc/sh/v3/cmd/shfmt@v3.13.0]
   entry: shfmt
   args: [--write]
   types: [shell]
@@ -27,7 +27,7 @@
   description: Shell source code formatter (Docker image)
   language: docker_image
   # Note: use the top level multiplatform image digest here
-  entry: --net none mvdan/shfmt:v3.12.0@sha256:307d265ffd25ce832899ae17c93ed5062fc3375c514bba8f52cbf52792735c4d
+  entry: --net none mvdan/shfmt:v3.13.0@sha256:307d265ffd25ce832899ae17c93ed5062fc3375c514bba8f52cbf52792735c4d
   args: [--write]
   types: [shell]
   exclude_types: [csh, tcsh, zsh]
