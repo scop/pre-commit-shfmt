@@ -6,7 +6,7 @@
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/scop/pre-commit-shfmt/badge)](https://scorecard.dev/viewer/?uri=github.com%2Fscop%2Fpre-commit-shfmt)
 
 [shfmt](https://github.com/mvdan/sh#shfmt) hook for
-[prek](https://github.com/j178/prek) and
+[prek](https://prek.j178.dev) and
 [pre-commit](https://pre-commit.com), with auto install.
 
 Usage in `.pre-commit-config.yaml`:
