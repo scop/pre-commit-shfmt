@@ -16,11 +16,12 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
+import json
 import re
 import string
+import subprocess
 import sys
 from urllib.parse import quote as urlquote, urljoin
-from urllib.request import urlopen
 
 setup_cfg_template = """
 [metadata]
@@ -118,12 +119,10 @@ def main(python_pkg_tag: str) -> None:
     data = {
         "python_pkg_version": python_pkg_tag.lstrip("v"),
     }
-    url = urljoin(base_url, "sha256sums.txt")
-    hexdigests = {}
-    with urlopen(url) as f:
-        for line in f:
-            if m := re.search(r"^([0-9a-f]{64})\s+(\S+)$", line.decode()):
-                hexdigests[m.group(2)] = m.group(1)
+    result = subprocess.run(["gh", "release", "view", "--repo", "mvdan/sh", main_tag, "--json", "assets"], stdout=subprocess.PIPE, check=True)
+    assets = json.loads(result.stdout).get("assets", [])
+    hexdigests = {asset["name"]: asset["digest"].removeprefix("sha256:") for asset in assets if asset["digest"].startswith("sha256:")}
+
     for fn in release_files:
         if m := re.search(r"_([a-z0-9]+_[a-z0-9]+)(?:\.exe)?$", fn):
             os_arch = m.group(1)
