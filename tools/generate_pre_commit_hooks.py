@@ -15,7 +15,7 @@ hooks_template = """
   entry: shfmt
   args: [--write]
   types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  exclude_types: [csh, tcsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
   minimum_pre_commit_version: 3.2.0 # for "stages" names
 
@@ -28,7 +28,7 @@ hooks_template = """
   entry: shfmt
   args: [--write]
   types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  exclude_types: [csh, tcsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
   minimum_pre_commit_version: 3.2.0 # for "stages" names
 
@@ -40,7 +40,7 @@ hooks_template = """
   entry: --net none mvdan/shfmt:${shfmt_tag}@${docker_image_digest}
   args: [--write]
   types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  exclude_types: [csh, tcsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
   minimum_pre_commit_version: 3.2.0 # for "stages" names
 """
