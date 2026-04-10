@@ -13,7 +13,7 @@ Usage in `.pre-commit-config.yaml`:
 
 ```yaml
 - repo: https://github.com/scop/pre-commit-shfmt
-  rev: v3.13.0-1
+  rev: v3.13.1-1
   hooks:
     # Choose one of:
     - id: shfmt         # prebuilt upstream executable
