@@ -5,7 +5,7 @@
   entry: shfmt
   args: [--write]
   types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  exclude_types: [csh, tcsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
   minimum_pre_commit_version: 3.2.0 # for "stages" names
 
@@ -18,7 +18,7 @@
   entry: shfmt
   args: [--write]
   types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  exclude_types: [csh, tcsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
   minimum_pre_commit_version: 3.2.0 # for "stages" names
 
@@ -30,6 +30,6 @@
   entry: --net none mvdan/shfmt:v3.13.0@sha256:cb551dbf13a0e9a017e9c89647bcd4da3b1bd71eb16c6dc7588d2593a9b4611a
   args: [--write]
   types: [shell]
-  exclude_types: [csh, tcsh, zsh]
+  exclude_types: [csh, tcsh]
   stages: [pre-commit, pre-merge-commit, pre-push, manual]
   minimum_pre_commit_version: 3.2.0 # for "stages" names
